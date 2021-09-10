@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.jitendraalekar.match.databinding.DashboardListItemBinding
 
 class DashboardListAdapter(
-    val onRowClick: (dashboardUser: DashboardUser ) -> Unit,
-    val onActionBtnClick: (dashboardUser: DashboardUser ) -> Unit,
+    private val onRowClick: (dashboardUser: DashboardUser ) -> Unit,
+    private val onActionBtnClick: (dashboardUser: DashboardUser ) -> Unit,
 ) : ListAdapter<DashboardUser, DashboardListViewholder>(DiffCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardListViewholder {
         return DashboardListViewholder(

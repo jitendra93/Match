@@ -1,117 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.jitendraalekar.match.data.model.ActionStatus"/>
-        <import type="android.view.View"/>
+
+        <import type="com.jitendraalekar.match.data.model.ActionStatus" />
+
+        <import type="android.view.View" />
+
         <variable
             name="user"
             type="com.jitendraalekar.match.ui.dashboard.DashboardUser" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:padding="16dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="4dp"
-        >
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"
-            >
+            android:layout_margin="@dimen/dp_8"
+            android:padding="@dimen/dp_16"
+            app:cardCornerRadius="@dimen/dp_10"
+            app:cardElevation="@dimen/dp_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/largePicture"
-                imageUrl="@{user.largePicture}"
-                android:layout_width="0dp"
-                android:layout_height="240dp"
-                android:layout_marginTop="16dp"
-                android:contentDescription="@string/profile_picture"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground">
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@{user.name}"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/largePicture"
-                app:layout_constraintTop_toBottomOf="@+id/largePicture"
-                tools:text="Jitendra Alekar" />
+                <ImageView
+                    android:id="@+id/largePicture"
+                    imageUrl="@{user.largePicture}"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_240"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:contentDescription="@string/profile_picture"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{user.age}"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/name"
-                app:layout_constraintTop_toBottomOf="@+id/name"
-                tools:text="28" />
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:text="@{user.name}"
+                    android:textSize="@dimen/sp_30"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/largePicture"
+                    app:layout_constraintTop_toBottomOf="@+id/largePicture"
+                    tools:text="Jitendra Alekar" />
 
-            <TextView
-                android:id="@+id/location"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{user.location}"
-                app:layout_constraintStart_toStartOf="@+id/name"
-                app:layout_constraintTop_toBottomOf="@+id/age"
-                tools:text="Indore, India" />
+                <TextView
+                    android:id="@+id/age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.age}"
+                    android:textSize="@dimen/sp_20"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name"
+                    tools:text="28" />
 
-            <Button
-                android:id="@+id/acceptBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:drawableStart="@drawable/ic_check"
-                android:text="@string/accept"
-                android:visibility="@{user.actionStatus==ActionStatus.ACCEPTED ? View.GONE : View.VISIBLE}"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                app:layout_constraintEnd_toStartOf="@+id/declineBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.location}"
+                    android:textSize="@dimen/sp_20"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/age"
+                    tools:text="Indore, India" />
 
-            <Button
-                android:id="@+id/declineBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_cancel"
-                android:text="@string/decline"
-                android:textAllCaps="false"
-                android:textColor="@color/dark_gray"
-                android:visibility="@{user.actionStatus==ActionStatus.DECLINED ? View.GONE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/acceptBtn" />
+                <Button
+                    android:id="@+id/acceptBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:drawableStart="@drawable/ic_check"
+                    android:text="@string/accept"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:visibility="@{user.actionStatus==ActionStatus.ACCEPTED ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/declineBtn"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/actionStatus"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:visibility="@{user.actionStatus==ActionStatus.ACCEPTED ? View.VISIBLE : View.GONE}"
-                android:layout_marginEnd="24dp"
-                app:tint="@android:color/holo_green_light"
-                app:layout_constraintBottom_toBottomOf="@+id/location"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/name"
-                app:srcCompat="@drawable/ic_check"
-                android:contentDescription="@string/accepted_msg" />
+                <Button
+                    android:id="@+id/declineBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_cancel"
+                    android:text="@string/decline"
+                    android:textAllCaps="false"
+                    android:textColor="@color/dark_gray"
+                    android:visibility="@{user.actionStatus==ActionStatus.DECLINED ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/acceptBtn" />
+
+                <ImageView
+                    android:id="@+id/actionStatus"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
+                    android:contentDescription="@string/accepted_msg"
+                    android:visibility="@{user.actionStatus==ActionStatus.ACCEPTED ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/location"
+                    app:srcCompat="@drawable/ic_check"
+                    app:tint="@android:color/holo_green_light" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

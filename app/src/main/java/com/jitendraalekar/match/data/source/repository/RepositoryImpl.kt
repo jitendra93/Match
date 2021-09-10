@@ -34,7 +34,7 @@ class RepositoryImpl @Inject constructor(
                 }
             }
         } catch (e: Exception) {
-            Timber.e(e, "response error")
+            Timber.e(e)
             Result.Error(e)
         }
     }

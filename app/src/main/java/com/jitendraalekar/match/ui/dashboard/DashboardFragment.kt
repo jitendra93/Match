@@ -1,108 +1,87 @@
 package com.jitendraalekar.match.ui.dashboard
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.jitendraalekar.match.R
 import com.jitendraalekar.match.databinding.FragmentDashboardBinding
+import com.jitendraalekar.match.ui.MainViewModel
+import com.jitendraalekar.match.util.isNetworkConnected
 
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
-    lateinit var binding : FragmentDashboardBinding
-    private val dashboardViewModel : DashboardViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-        dashboardViewModel.load()
-    }
-
+    lateinit var binding: FragmentDashboardBinding
+    private val mainViewModel: MainViewModel by activityViewModels()
+    private val dashboardListAdapter = DashboardListAdapter(::navigateToDetail, ::onActionBtnClick)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = FragmentDashboardBinding.inflate(inflater,container,false).apply { binding = this }.root
+    ): View =
+        FragmentDashboardBinding.inflate(inflater, container, false).apply { binding = this }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setAdapter()
 
-        val dashboardListAdapter = setAdapter()
-        dashboardViewModel.result.onEach { state ->
-            when(state){
-                is DashboardViewState.Loading -> {
-                    binding.message.visibility=View.VISIBLE
-                    binding.message.text="Loading"
-                    Timber.d("dashboard onEach Loading")
-                }
-                is DashboardViewState.Content -> {
-                    binding.message.visibility=View.GONE
-                    dashboardListAdapter.submitList(state.list)
-                    Timber.d("dashboard onEach ${state.list.size} items")
-                }
-                is DashboardViewState.Error -> {
-                    binding.message.visibility=View.VISIBLE
-                    binding.message.text = state.throwable.toString()
-                    Timber.d("dashboard onEach error")
-                }
-            }
+        binding.swiperefresh.setOnRefreshListener {
+            refreshData()
+        }
 
-        }.launchIn(lifecycleScope)
+        mainViewModel.result.onEach(::setViewState).launchIn(lifecycleScope)
     }
 
-    private fun setAdapter(): DashboardListAdapter {
-        val dashboardListAdapter = DashboardListAdapter(onRowClick = {
-            navigateToDetail(it)
-        }, onActionBtnClick = {
-            onActionBtnClick(it)
-        })
+    private fun setViewState(state: DashboardViewState) {
+        when (state) {
+            is DashboardViewState.Loading -> {
+                binding.swiperefresh.isRefreshing = true
+            }
+            is DashboardViewState.Content -> {
+                binding.noDataMsg.visibility = View.GONE
+                binding.swiperefresh.isRefreshing = false
+                dashboardListAdapter.submitList(state.list)
+            }
+            is DashboardViewState.Error -> {
+                binding.swiperefresh.isRefreshing = false
+            }
+        }
+    }
+
+    private fun refreshData() {
+        if (context?.isNetworkConnected() == true) {
+            mainViewModel.refreshData()
+        } else {
+            Snackbar.make(binding.root, getString(R.string.no_internet_msg), Snackbar.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun setAdapter() {
+
         with(binding.matches) {
             adapter = dashboardListAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(object : RecyclerView.ItemDecoration(){
-                override fun getItemOffsets(
-                    outRect: Rect,
-                    view: View,
-                    parent: RecyclerView,
-                    state: RecyclerView.State
-                ) {
-                    outRect.left = 24
-                    outRect.right = 24
-                    outRect.top = 16
-                    outRect.bottom = 16
-                }
-            })
+            addItemDecoration(LinearItemDecoration(resources.getDimensionPixelSize(R.dimen.dp_24)))
         }
-        return dashboardListAdapter
     }
 
 
     private fun onActionBtnClick(dashboardUser: DashboardUser) {
-        Toast.makeText(context,"Mark action ${dashboardUser.actionStatus} for ${dashboardUser.name}",Toast.LENGTH_SHORT).show()
-        dashboardViewModel.updateActionStatus(dashboardUser)
+        mainViewModel.updateActionStatus(dashboardUser)
     }
 
-    private fun navigateToDetail(dashboardUser: DashboardUser)  {
+    private fun navigateToDetail(dashboardUser: DashboardUser) {
         findNavController().navigate(DashboardFragmentDirections.showDetail(dashboardUser.uuid))
-        Toast.makeText(context,"navigate to detail for ${dashboardUser.name}",Toast.LENGTH_SHORT).show()
     }
 }

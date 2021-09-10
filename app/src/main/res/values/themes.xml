@@ -7,13 +7,5 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="HeadLineOneAppearance" parent="@style/TextAppearance.AppCompat.Large">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="HeadLineTwoAppearance" parent="@style/TextAppearance.AppCompat.Medium">
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>

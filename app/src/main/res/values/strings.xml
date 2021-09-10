@@ -1,15 +1,11 @@
 <resources>
     <string name="app_name">Match</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="welcomeMesage">Lets get logging.\nCurrent credit is %s</string>
-    <string name="emptyLogs">No activity logged</string>
-    <string name="log">Log</string>
-    <string name="save">save</string>
     <string name="profile_picture">Profile picture</string>
     <string name="accept">Accept</string>
     <string name="accepted_msg">Action status Accepted</string>
     <string name="decline">Decline</string>
-    <string name="dashboard" />
     <string name="detail">Detail</string>
+    <string name="no_internet_msg">Not connected to network</string>
+    <string name="no_data">No match available</string>
+    <string name="filter">Filter</string>
 </resources>

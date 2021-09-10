@@ -1,28 +1,23 @@
 package com.jitendraalekar.match.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
 import com.jitendraalekar.match.data.model.ActionStatus
 import com.jitendraalekar.match.databinding.FragmentDetailBinding
-import com.jitendraalekar.match.ui.dashboard.DashboardViewModel
+import com.jitendraalekar.match.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 const val UUID = "com.jitendraalekar.match.ui.detail.DetailFragment.uuid"
+
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var binding : FragmentDetailBinding
-    val sharedViewModel : DashboardViewModel by activityViewModels()
-    //val args : DetailFragmentArgs by navArgs()
+    private val sharedViewModel : MainViewModel by activityViewModels()
 
     companion object{
         fun getInstance(uuid: String) : DetailFragment{
@@ -38,7 +33,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return FragmentDetailBinding.inflate(inflater,container,false).also { binding = it }.root
     }
 
