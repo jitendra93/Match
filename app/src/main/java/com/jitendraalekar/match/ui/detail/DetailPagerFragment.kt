@@ -52,12 +52,18 @@ class DetailPagerFragment : Fragment() {
             .onEach {
             if(it is DashboardViewState.Content) {
                 val animate = binding.pager.adapter == null
+                val currentItem = if(animate){
+                    it.list.indexOfFirst {
+                        it.uuid==args.uuid
+                    }
+                }else{
+                    binding.pager.currentItem
+                }
                 binding.pager.adapter = PagerAdapter(this,it.list)
 
+
                binding.pager.post{
-                    binding.pager.setCurrentItem(  it.list.indexOfFirst {
-                        it.uuid==args.uuid
-                    },animate)
+                    binding.pager.setCurrentItem(currentItem,animate)
                 }
 
             }
