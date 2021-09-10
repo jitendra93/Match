@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Match</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="welcomeMesage">Lets get logging.\nCurrent credit is %s</string>
+    <string name="emptyLogs">No activity logged</string>
+    <string name="log">Log</string>
+    <string name="save">save</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
 </resources>
