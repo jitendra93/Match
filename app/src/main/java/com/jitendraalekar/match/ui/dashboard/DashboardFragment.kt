@@ -57,7 +57,7 @@ class DashboardFragment : Fragment() {
                 }
                 is DashboardViewState.Error -> {
                     binding.message.visibility=View.VISIBLE
-                    binding.message.text = "Error loading data"
+                    binding.message.text = state.throwable.toString()
                     Timber.d("dashboard onEach error")
                 }
             }

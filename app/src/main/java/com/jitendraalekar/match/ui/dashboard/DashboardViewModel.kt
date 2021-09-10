@@ -12,6 +12,7 @@ import javax.inject.Inject
 import com.jitendraalekar.match.network.Result
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 
 @HiltViewModel
@@ -31,7 +32,10 @@ class DashboardViewModel @Inject constructor( val repository: Repository) : View
             when(val res = repository.getUsers()){
                 is Result.Success ->{
                     res.data.conflate().collect{
-                        _results.value = DashboardViewState.Content(it.map { DashboardUser.fromUser(it) })
+                        Timber.d("viewmodel ${it.size}")
+                        _results.value = DashboardViewState.Content(it.map {
+                            DashboardUser.fromUser(it)
+                        })
                     }
                 }
                 is Result.Error -> _results.value = DashboardViewState.Error(res.exception)

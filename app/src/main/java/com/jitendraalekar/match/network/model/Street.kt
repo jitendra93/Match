@@ -16,6 +16,6 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 data class Street (
 
-	@SerializedName("number") val number : Int,
+	@SerializedName("number") val number : String,
 	@SerializedName("name") val name : String
 )

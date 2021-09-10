@@ -19,7 +19,7 @@ interface UserDao {
      fun find(id : String) : Flow<User>
 
     @Query("SELECT * FROM user WHERE actionStatus = :actionStatus")
-     fun findBy(actionStatus: ActionStatus) : Flow<List<User>>
+     fun findBy(actionStatus: ActionStatus?) : Flow<List<User>>
 
     @Query("UPDATE user SET actionStatus = :actionStatus where uuid = :uuid")
     suspend fun updateActionStatus(uuid: String, actionStatus: ActionStatus)

@@ -16,7 +16,7 @@ data class User(
     val city : String,
     val state : String,
     val country : String,
-    val postCode : Int,
+    val postCode : String,
     val latitude : String,
     val longitude : String,
     val timeZoneOffset : String,

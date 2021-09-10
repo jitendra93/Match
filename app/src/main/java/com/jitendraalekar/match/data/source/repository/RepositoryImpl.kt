@@ -23,14 +23,21 @@ class RepositoryImpl @Inject constructor(
             withContext(coroutineDispatcherIO) {
                 val response = remoteDataSource.getAllUsers()
                if(response is Result.Success){
+                   Timber.d("response is success")
                    response.data.results.map{NetworkUserToUserConverter.toUser(it)}.forEach {
+                       Timber.d("response is saving")
                        localDataSource.saveUsers(it)
+                       Timber.d("response is saved")
                    }
+                   Timber.d("return getaLLUser")
+                   Result.Success(localDataSource.getAllUsers())
+               }else{
+                   Result.Error(IllegalAccessException("exception"))
                }
-                Result.Success(localDataSource.getAllUsers())
             }
         }catch (e : Exception){
-            Result.Error(e)
+            Timber.e(e, "response error")
+           Result.Error(e)
         }
     }
 

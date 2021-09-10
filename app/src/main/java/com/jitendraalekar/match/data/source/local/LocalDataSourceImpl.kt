@@ -20,7 +20,7 @@ class LocalDataSourceImpl @Inject constructor(val userDao: UserDao) : LocalDataS
         userDao.updateActionStatus(uuid = uuid,actionStatus = actionStatus)
     }
 
-    override suspend fun getUserByActionStatus(actionStatus: ActionStatus): Flow<List<User>> {
+    override suspend fun getUserByActionStatus(actionStatus: ActionStatus?): Flow<List<User>> {
         return userDao.findBy(actionStatus = actionStatus)
     }
 
