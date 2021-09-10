@@ -1,5 +1,6 @@
 package com.jitendraalekar.match.ui.dashboard
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jitendraalekar.match.databinding.FragmentDashboardBinding
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +32,9 @@ class DashboardFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        dashboardViewModel.load()
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +46,6 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val dashboardListAdapter = setAdapter()
-
         dashboardViewModel.result.onEach { state ->
             when(state){
                 is DashboardViewState.Loading -> {
@@ -74,6 +77,19 @@ class DashboardFragment : Fragment() {
         with(binding.matches) {
             adapter = dashboardListAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(object : RecyclerView.ItemDecoration(){
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    outRect.left = 24
+                    outRect.right = 24
+                    outRect.top = 16
+                    outRect.bottom = 16
+                }
+            })
         }
         return dashboardListAdapter
     }

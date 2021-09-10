@@ -8,5 +8,6 @@
     <string name="save">save</string>
     <string name="profile_picture">Profile picture</string>
     <string name="accept">Accept</string>
+    <string name="accepted_msg">Action status Accepted</string>
     <string name="decline">Decline</string>
 </resources>

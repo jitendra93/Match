@@ -8,6 +8,8 @@ import java.util.*
 
 interface Repository {
 
+    suspend fun refreshData() : Result<Boolean>
+
     suspend fun getUsers() : Result<Flow<List<User>>>
 
     suspend fun saveUser(vararg user: User)

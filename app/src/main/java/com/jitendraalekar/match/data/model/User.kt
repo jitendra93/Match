@@ -28,5 +28,5 @@ data class User(
     val largePicture: String,
     val mediumPicture: String,
     val thumbnailPicture: String,
-    val actionStatus : ActionStatus? = null
+    val actionStatus : ActionStatus = ActionStatus.NONE
 )

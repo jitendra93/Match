@@ -1,5 +1,7 @@
 package com.jitendraalekar.match.ui.dashboard
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jitendraalekar.match.data.model.ActionStatus
@@ -22,12 +24,12 @@ class DashboardViewModel @Inject constructor( val repository: Repository) : View
 
     val result : Flow<DashboardViewState> = _results
 
-    init {
-        load()
-    }
     fun load(){
         _results.value = DashboardViewState.Loading
 
+        viewModelScope.launch {
+            repository.refreshData() //todo use return
+        }
         viewModelScope.launch {
             when(val res = repository.getUsers()){
                 is Result.Success ->{

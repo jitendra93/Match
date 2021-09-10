@@ -19,7 +19,7 @@ data class DashboardUser(
     val mediumPicture: String,
     val largePicture: String,
     val location: String,
-    val actionStatus: ActionStatus? = null
+    val actionStatus: ActionStatus
 ) {
     companion object {
         fun fromUser(user: User): DashboardUser {

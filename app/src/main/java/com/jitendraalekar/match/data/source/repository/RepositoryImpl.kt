@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -18,41 +19,42 @@ class RepositoryImpl @Inject constructor(
     private val coroutineDispatcherIO: CoroutineDispatcher,
 ) : Repository {
 
-    override suspend fun getUsers(): Result<Flow<List<User>>> {
-        return  try {
+    override suspend fun refreshData(): Result<Boolean> {
+        return try {
             withContext(coroutineDispatcherIO) {
                 val response = remoteDataSource.getAllUsers()
-               if(response is Result.Success){
-                   Timber.d("response is success")
-                   response.data.results.map{NetworkUserToUserConverter.toUser(it)}.forEach {
-                       Timber.d("response is saving")
-                       localDataSource.saveUsers(it)
-                       Timber.d("response is saved")
-                   }
-                   Timber.d("return getaLLUser")
-                   Result.Success(localDataSource.getAllUsers())
-               }else{
-                   Result.Error(IllegalAccessException("exception"))
-               }
+                if (response is Result.Success) {
+                    localDataSource.saveUsers(
+                        *response.data.results.map { NetworkUserToUserConverter.toUser(it) }
+                            .toTypedArray()
+                    )
+                    Result.Success(true)
+                } else {
+                    Result.Error(IllegalStateException("Error while data fetching"))
+                }
             }
-        }catch (e : Exception){
+        } catch (e: Exception) {
             Timber.e(e, "response error")
-           Result.Error(e)
+            Result.Error(e)
         }
+    }
+
+    override suspend fun getUsers(): Result<Flow<List<User>>> {
+        return Result.Success(localDataSource.getAllUsers())
     }
 
     override suspend fun saveUser(vararg user: User) {
         try {
             localDataSource.saveUsers()
-        }catch (e : Exception){
+        } catch (e: Exception) {
             Timber.e(e)
         }
     }
 
     override suspend fun updateUserActionStatus(uuid: String, actionStatus: ActionStatus) {
         try {
-            localDataSource.updateUserActionStatus(uuid,actionStatus)
-        }catch (e : Exception){
+            localDataSource.updateUserActionStatus(uuid, actionStatus)
+        } catch (e: Exception) {
             Timber.e(e)
         }
     }
@@ -60,7 +62,7 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getUserByActionStatus(actionStatus: ActionStatus): Result<Flow<List<User>>> {
         return try {
             Result.Success(localDataSource.getUserByActionStatus(actionStatus))
-        }catch (e : Exception){
+        } catch (e: Exception) {
             Timber.e(e)
             Result.Error(e)
         }
@@ -69,7 +71,7 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getUserById(uuid: String): Result<Flow<User>> {
         return try {
             Result.Success(localDataSource.getUserById(uuid))
-        }catch (e : Exception){
+        } catch (e: Exception) {
             Timber.e(e)
             Result.Error(e)
         }

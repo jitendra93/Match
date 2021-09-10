@@ -13,7 +13,7 @@ interface LocalDataSource {
 
     suspend fun updateUserActionStatus(uuid : String, actionStatus: ActionStatus)
 
-    suspend fun getUserByActionStatus(actionStatus: ActionStatus?) : Flow<List<User>>
+    suspend fun getUserByActionStatus(actionStatus: ActionStatus) : Flow<List<User>>
 
     suspend fun getUserById(uuid: String) : Flow<User>
 

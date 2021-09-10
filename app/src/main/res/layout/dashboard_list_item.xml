@@ -4,6 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="com.jitendraalekar.match.data.model.ActionStatus"/>
+        <import type="android.view.View"/>
         <variable
             name="user"
             type="com.jitendraalekar.match.ui.dashboard.DashboardUser" />
@@ -12,70 +14,25 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="4dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/horizontalSeparator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.6" />
-
-            <Button
-                android:id="@+id/acceptBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/solid_color_active"
-                android:drawableStart="@drawable/ic_check"
-                android:text="@string/accept"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/declineBtn"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/horizontalSeparator" />
-
-            <Button
-                android:id="@+id/declineBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/solid_color_inactive"
-                android:drawableStart="@drawable/ic_cancel"
-                android:text="@string/decline"
-                android:textAllCaps="false"
-                android:textColor="@color/dark_gray"
-                app:layout_constraintBottom_toBottomOf="@+id/acceptBtn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/acceptBtn"
-                app:layout_constraintTop_toTopOf="@+id/acceptBtn"
-                app:layout_constraintVertical_bias="0.502" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticalSeparator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.40" />
+            android:background="?android:attr/selectableItemBackground"
+            >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/thumbnail"
                 imageUrl="@{user.thumbnail}"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:contentDescription="@string/profile_picture"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalSeparator"
-                app:layout_constraintEnd_toStartOf="@+id/verticalSeparator"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -84,9 +41,11 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:text="@{user.name}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/verticalSeparator"
+                app:layout_constraintStart_toEndOf="@+id/thumbnail"
                 app:layout_constraintTop_toTopOf="@+id/thumbnail"
                 tools:text="Jitendra Alekar" />
 
@@ -95,18 +54,65 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{user.age}"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/name"
                 app:layout_constraintTop_toBottomOf="@+id/name"
                 tools:text="28" />
 
             <TextView
                 android:id="@+id/location"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{user.location}"
                 app:layout_constraintStart_toStartOf="@+id/name"
                 app:layout_constraintTop_toBottomOf="@+id/age"
                 tools:text="Indore, India" />
+
+            <Button
+                android:id="@+id/acceptBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:drawableStart="@drawable/ic_check"
+                android:text="@string/accept"
+                android:visibility="@{user.actionStatus==ActionStatus.ACCEPTED ? View.GONE : View.VISIBLE}"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toStartOf="@+id/declineBtn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/thumbnail" />
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:id="@+id/declineBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_cancel"
+                android:visibility="@{user.actionStatus==ActionStatus.DECLINED ? View.GONE : View.VISIBLE}"
+                android:text="@string/decline"
+                android:textAllCaps="false"
+                android:textColor="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/acceptBtn"
+                app:layout_constraintTop_toBottomOf="@id/thumbnail"
+                />
+
+            <ImageView
+            android:id="@+id/actionStatus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:visibility="@{user.actionStatus==ActionStatus.ACCEPTED ? View.VISIBLE : View.GONE}"
+                android:layout_marginEnd="24dp"
+                app:tint="@android:color/holo_green_light"
+                app:layout_constraintBottom_toBottomOf="@+id/location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/name"
+                app:srcCompat="@drawable/ic_check"
+                android:contentDescription="@string/accepted_msg" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
