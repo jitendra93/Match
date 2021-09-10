@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.jitendraalekar.match.ui.dashboard.DashboardFragment"
-        android:label="DashboardFragment" />
+        android:label="@string/dashboard">
+        <action
+            android:id="@+id/showDetail"
+            app:destination="@id/detailPagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPagerFragment"
+        android:name="com.jitendraalekar.match.ui.detail.DetailPagerFragment"
+        android:label="@string/detail">
+        <argument
+            android:name="uuid"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,7 +28,7 @@ import timber.log.Timber
 class DashboardFragment : Fragment() {
 
     lateinit var binding : FragmentDashboardBinding
-    private val dashboardViewModel : DashboardViewModel by viewModels()
+    private val dashboardViewModel : DashboardViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +102,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun navigateToDetail(dashboardUser: DashboardUser)  {
+        findNavController().navigate(DashboardFragmentDirections.showDetail(dashboardUser.uuid))
         Toast.makeText(context,"navigate to detail for ${dashboardUser.name}",Toast.LENGTH_SHORT).show()
     }
 }

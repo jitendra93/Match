@@ -50,4 +50,8 @@ class DashboardViewModel @Inject constructor( val repository: Repository) : View
         }
     }
 
+    fun getUser(uuid : String) : DashboardUser{
+
+        return (_results.value as DashboardViewState.Content).list.first { it.uuid == uuid }
+    }
 }

@@ -9,7 +9,7 @@ import java.util.*
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user ORDER BY firstName")
     fun all() : Flow<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

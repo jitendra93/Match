@@ -10,4 +10,6 @@
     <string name="accept">Accept</string>
     <string name="accepted_msg">Action status Accepted</string>
     <string name="decline">Decline</string>
+    <string name="dashboard" />
+    <string name="detail">Detail</string>
 </resources>
