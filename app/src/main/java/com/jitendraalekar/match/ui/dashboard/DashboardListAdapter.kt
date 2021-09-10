@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.jitendraalekar.match.databinding.DashboardListItemBinding
 
 class DashboardListAdapter(
-    val onRowClick: (uuid : String) -> Unit,
-    val onAcceptBtnClick: (uuid : String) -> Unit,
-    val onDeclineBtnClick: (uuid : String) -> Unit
+    val onRowClick: (dashboardUser: DashboardUser ) -> Unit,
+    val onActionBtnClick: (dashboardUser: DashboardUser ) -> Unit,
 ) : ListAdapter<DashboardUser, DashboardListViewholder>(DiffCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardListViewholder {
         return DashboardListViewholder(
@@ -18,7 +17,7 @@ class DashboardListAdapter(
     }
 
     override fun onBindViewHolder(holder: DashboardListViewholder, position: Int) {
-        holder.bind(getItem(position), onRowClick,onAcceptBtnClick,onDeclineBtnClick)
+        holder.bind(getItem(position), onRowClick,onActionBtnClick)
     }
 
     private object DiffCallBack : DiffUtil.ItemCallback<DashboardUser>() {
@@ -27,7 +26,7 @@ class DashboardListAdapter(
         }
 
         override fun areContentsTheSame(oldItem: DashboardUser, newItem: DashboardUser): Boolean {
-            return oldItem == newItem
+            return oldItem.uuid == newItem.uuid && oldItem.actionStatus == newItem.actionStatus
         }
     }
 }

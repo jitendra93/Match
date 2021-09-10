@@ -1,9 +1,10 @@
 package com.jitendraalekar.match.data.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "user")
+@Entity(tableName = "user", indices = [Index(value = ["actionStatus"])])
 data class User(
     @PrimaryKey
     val uuid : String,
@@ -27,6 +28,5 @@ data class User(
     val largePicture: String,
     val mediumPicture: String,
     val thumbnailPicture: String,
-    val actionStatus : String? = null
-
+    val actionStatus : ActionStatus? = null
 )

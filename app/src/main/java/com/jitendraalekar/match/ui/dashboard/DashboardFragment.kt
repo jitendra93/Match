@@ -2,6 +2,7 @@ package com.jitendraalekar.match.ui.dashboard
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -67,10 +68,8 @@ class DashboardFragment : Fragment() {
     private fun setAdapter(): DashboardListAdapter {
         val dashboardListAdapter = DashboardListAdapter(onRowClick = {
             navigateToDetail(it)
-        }, onAcceptBtnClick = {
-            onAcceptClicked(it)
-        }, onDeclineBtnClick = {
-            onDeclineBtnClicked(it)
+        }, onActionBtnClick = {
+            onActionBtnClick(it)
         })
         with(binding.matches) {
             adapter = dashboardListAdapter
@@ -79,13 +78,13 @@ class DashboardFragment : Fragment() {
         return dashboardListAdapter
     }
 
-    private fun onDeclineBtnClicked(it: String) {
 
+    private fun onActionBtnClick(dashboardUser: DashboardUser) {
+        Toast.makeText(context,"Mark action ${dashboardUser.actionStatus} for ${dashboardUser.name}",Toast.LENGTH_SHORT).show()
+        dashboardViewModel.updateActionStatus(dashboardUser)
     }
 
-    private fun onAcceptClicked(it: String) {
-    }
-
-    private fun navigateToDetail(uuid: String)  {
+    private fun navigateToDetail(dashboardUser: DashboardUser)  {
+        Toast.makeText(context,"navigate to detail for ${dashboardUser.name}",Toast.LENGTH_SHORT).show()
     }
 }

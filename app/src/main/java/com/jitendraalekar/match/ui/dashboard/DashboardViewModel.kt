@@ -2,6 +2,7 @@ package com.jitendraalekar.match.ui.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jitendraalekar.match.data.model.ActionStatus
 import com.jitendraalekar.match.data.model.User
 import com.jitendraalekar.match.data.source.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,9 +38,9 @@ class DashboardViewModel @Inject constructor( val repository: Repository) : View
             }
         }
     }
-    fun updateDb(user : User){
+    fun updateActionStatus( dashboardUser: DashboardUser){
         viewModelScope.launch {
-            repository.updateUserStatus(user.copy(firstName = "jitendra"))
+            repository.updateUserActionStatus(dashboardUser.uuid,dashboardUser.actionStatus!!)
         }
     }
 

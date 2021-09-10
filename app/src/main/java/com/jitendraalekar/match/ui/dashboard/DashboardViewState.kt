@@ -1,5 +1,6 @@
 package com.jitendraalekar.match.ui.dashboard
 
+import com.jitendraalekar.match.data.model.ActionStatus
 import com.jitendraalekar.match.data.model.User
 
 sealed class DashboardViewState {
@@ -18,7 +19,7 @@ data class DashboardUser(
     val mediumPicture: String,
     val largePicture: String,
     val location: String,
-    val actionStatus: String? = null
+    val actionStatus: ActionStatus? = null
 ) {
     companion object {
         fun fromUser(user: User): DashboardUser {
