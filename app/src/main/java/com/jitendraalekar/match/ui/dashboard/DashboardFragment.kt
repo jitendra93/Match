@@ -72,7 +72,7 @@ class DashboardFragment : Fragment() {
 
         with(binding.matches) {
             adapter = dashboardListAdapter
-            addItemDecoration(LinearItemDecoration(resources.getDimensionPixelSize(R.dimen.dp_24)))
+//            addItemDecoration(LinearItemDecoration(resources.getDimensionPixelSize(R.dimen.dp_24)))
         }
     }
 

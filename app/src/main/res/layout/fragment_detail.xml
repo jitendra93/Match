@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/dp_8"
@@ -82,7 +82,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/age"
                     tools:text="Indore, India" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/acceptBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -91,16 +91,18 @@
                     android:drawableStart="@drawable/ic_check"
                     android:text="@string/accept"
                     android:textAllCaps="false"
+                    style="@style/Button"
                     android:textColor="@android:color/white"
                     android:visibility="@{user.actionStatus==ActionStatus.ACCEPTED ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/declineBtn"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/declineBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/Button"
                     android:drawableStart="@drawable/ic_cancel"
                     android:text="@string/decline"
                     android:textAllCaps="false"
@@ -112,6 +114,7 @@
 
                 <ImageView
                     android:id="@+id/actionStatus"
+                    style="@style/Button"
                     android:layout_width="@dimen/dp_48"
                     android:layout_height="@dimen/dp_48"
                     android:contentDescription="@string/accepted_msg"
@@ -125,6 +128,6 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
